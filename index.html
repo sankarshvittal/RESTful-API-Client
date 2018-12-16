@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>536 p3 ex</title>
+
+
+  <!--jQuery-->
+  <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+
+
+  <!--jQuery UI CDN  -->
+  <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js" type="text/javascript"></script>
+  <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"
+  rel="stylesheet">
+
+  <!--DataTable plugin -->
+  <script src="DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js" type=
+  "text/javascript"></script>
+  <link href="DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css" rel=
+  "stylesheet">
+  <script src="DataTables/DataTables-1.10.18/js/dataTables.jqueryui.min.js" type=
+  "text/javascript"></script>
+  <link href="DataTables/DataTables-1.10.18/css/dataTables.jqueryui.min.css" rel=
+  "stylesheet">
+
+<!--google maps api -->
+  <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh2OLId9bTFREOxvngUJTGRPMfPn3Cwus" type="text/javascript"></script>
+
+<!--gmap3 plugin -->
+<script src="jbdemonte-gmap3-5fdfcad/src/gmap3.js" type="text/javascript"></script>
+
+<!--responsiveTabs plugin -->
+      <script src="Responsive-Tabs-master/js/jquery.responsiveTabs.js"></script>
+      <link type="text/css" rel="stylesheet" href="Responsive-Tabs-master/css/responsive-tabs.css" />
+      <link type="text/css" rel="stylesheet" href="Responsive-Tabs-master/css/style.css" />
+
+<!--myPlugincreated by sankarsh vittal -->
+      <script src="myPlugin.js" type="text/javascript"></script>
+
+<!--javscript created by sankarsh vittal-->
+      <script src="mainScript.js" type="text/javascript"></script>
+
+<!--CSS created by sankarsh vittal-->
+      <link type="text/css" rel="stylesheet" href="mainScript.css" />
+
+<!-- Bootstrap -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+
+<body style="background-color:#ccf3ee; font-size: 12px">
+  <h2>Emergency Services Directory</h2>
+  <hr style="height:2px;border:none;color:#333;background-color:#333;">
+  <div class="container">
+  <form id="search-form">
+    <fieldset class="scheduler-border">
+      <legend class="scheduler-border">Search Criteria</legend>
+      <div class="form-group">
+      <span>Organization Type</span> <select id="orgType" onchange="" name="type"></select>
+      </div>
+
+      <div class="form-group">
+      <span id="orgLabel">Organization Name</span>
+        <input id="orgName"  type="text" name="name"> <em style="color: rgb(104, 129, 162);">*can be partial - "vol" for "Volunteer"</em>
+        </div>
+
+    <div class="form-group">
+      <span>State  </span><select id="state" onchange="getCities(this);" name="state">
+        <option value="">
+          All States
+        </option>
+        <option value="AK">AK</option>
+        <option value="AL">AL</option>
+        <option value="AR">AR</option>
+        <option value="AZ">AZ</option>
+        <option value="CA">CA</option>
+        <option value="CO">CO</option>
+        <option value="CT">CT</option>
+        <option value="DC">DC</option>
+        <option value="DE">DE</option>
+        <option value="FL">FL</option>
+        <option value="GA">GA</option>
+        <option value="HI">HI</option>
+        <option value="IA">IA</option>
+        <option value="ID">ID</option>
+        <option value="IL">IL</option>
+        <option value="IN">IN</option>
+        <option value="KS">KS</option>
+        <option value="KY">KY</option>
+        <option value="LA">LA</option>
+        <option value="MA">MA</option>
+        <option value="MD">MD</option>
+        <option value="ME">ME</option>
+        <option value="MI">MI</option>
+        <option value="MN">MN</option>
+        <option value="MO">MO</option>
+        <option value="MS">MS</option>
+        <option value="MT">MT</option>
+        <option value="NC">NC</option>
+        <option value="ND">ND</option>
+        <option value="NE">NE</option>
+        <option value="NH">NH</option>
+        <option value="NJ">NJ</option>
+        <option value="NM">NM</option>
+        <option value="NV">NV</option>
+        <option value="NY" selected="selected">NY</option>
+        <option value="OH">OH</option>
+        <option value="OK">OK</option>
+        <option value="OR">OR</option>
+        <option value="PA">PA</option>
+        <option value="RI">RI</option>
+        <option value="SC">SC</option>
+        <option value="SD">SD</option>
+        <option value="TN">TN</option>
+        <option value="TX">TX</option>
+        <option value="UT">UT</option>
+        <option value="VA">VA</option>
+        <option value="VT">VT</option>
+        <option value="WA">WA</option>
+        <option value="WI">WI</option>
+        <option value="WV">WV</option>
+        <option value="WY">WY</option>
+
+    </select>
+
+    <span id="orgCitySearch"></span>
+    <select id='citiesDiv' name="town" >
+      <option value=''>--City--</option>
+    </select>
+</div>
+
+
+<div class="form-group">
+      <p>County <input id="county" type="text" name="county"></p>
+
+</div>
+
+<div class="form-group">
+      <p>ZIP Code <input id="zip" type="text" name="zip"></p>
+
+</div>
+
+      <div style="margin:0 0 0 210px">
+        <input class="btn btn-default" value="Show Results" onclick="MYAPP.mainScript.showResults()" id="btnSearch"  type="button"> <input type="reset" class="btn btn-default"  value="Reset Form" onclick="clearAll()">
+      </div>
+    </fieldset>
+
+  </form>
+
+<form id="search-form">
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border">Customize</legend>
+
+<div class="form-group">
+    <span >  BackGround Color : </span>
+      <select class="selectpicker" id='backColor' data-style="btn-new">
+      <option value="#ffb3b3">Red</option>
+      <option value="#d9d9d9">Gray</option>
+      <option value="#ccf3ee" selected="selected">Green</option>
+      <option value="#ffcc99">Orange</option>
+      </select>
+
+<span>Font Size : </span>
+  <select id='fontChange' >
+  <option value="12px" selected="selected">12px</option>
+  <option value="13px">13px</option>
+  <option value="14px">14px</option>
+  <option value="15px">15px</option>
+  </select>
+</div>
+
+
+  </fieldset>
+
+  </form>
+  </div>
+  <div id="tableOutput"></div>
+
+  <div id="dialog-modal" title="Emergency Services Directory">
+
+
+</body>
+</html>
